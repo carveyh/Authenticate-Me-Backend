@@ -35,5 +35,13 @@ module AuthenticateMe
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Added custom for W12D2 Project:
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore,
+      key: '_auth_me_session', #simply name of session cookie
+      same_site: :lax, #options strict, lax, none - specifies when cookie gets sent (only for requests from same site / only send cookie for requests from same site or navigating to site thru link / always send cookies)
+      #default for Chrome & Rails is :lax, but be explicit since standards across browsers currently in flux.
+      secure: Rails.env.production? #specifies whether cookie requires specific context
   end
 end
